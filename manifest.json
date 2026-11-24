@@ -1,0 +1,12 @@
+{
+  "name": "Nova – iPad Assistant",
+  "short_name": "Nova",
+  "description": "Dein deutschsprachiger Browser-Assistent.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080e1b",
+  "theme_color": "#090f1e",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
