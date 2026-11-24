@@ -43,6 +43,7 @@ button,input{font:inherit}button{border:0;border-radius:14px;padding:13px 16px;f
 <section class="panel"><h2>Letzte Befehle</h2><div id="history" class="history"><div class="muted">Deine letzten Befehle erscheinen hier.</div></div><div class="actions"><button class="secondary" id="clearHistory" type="button">Verlauf löschen</button><button class="secondary" id="install" type="button" hidden>＋ Zum Home-Bildschirm</button></div></section>
 <footer>Nova Assistant · Kostenlose Web-Version · Läuft im Browser</footer>
 </main>
+<script type="module" src="./firebase-ai.js"></script>
 <script>
 const $=id=>document.getElementById(id);let lastReply="Hallo! Ich bin Nova. Wie kann ich helfen?";let pendingUrl=null;let recognition=null;let listening=false;let installPrompt=null;let chatMessages=[];
 const say=t=>{if(!$("voice").checked||!("speechSynthesis"in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";const voices=speechSynthesis.getVoices();const de=voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith("de"));if(de)u.voice=de;speechSynthesis.speak(u)};
