@@ -1,5 +1,5 @@
-const CACHE="nova-assistant-v5";
-const ASSETS=["./","./index.html","./manifest.json","./icon.svg","./firebase-config.js","./firebase-ai.js"];
+const CACHE="nova-assistant-v6";
+const ASSETS=["./","./index.html","./manifest.json","./icon.svg","./firebase-ai.js"];
 self.addEventListener("install",event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
