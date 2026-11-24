@@ -22,7 +22,7 @@ button,input{font:inherit}button{border:0;border-radius:14px;padding:13px 16px;f
 <header><div class="brand">✦ <span>NOVA</span> ASSISTANT</div><div class="pill">iPad · Deutsch</div></header>
 <section class="hero">
  <div class="eyebrow">DEIN PERSÖNLICHER ASSISTENT</div><div class="orb" aria-hidden="true"><span>✦</span></div>
- <h1>Was kann ich für dich tun?</h1><div class="status" id="status">Bereit. Tippe auf das Mikrofon oder schreibe einen Befehl.</div>
+ <h1>Was kann ich für dich tun?</h1><div class="status" id="status">Bereit für Befehle. Gemini wartet noch auf die Firebase-Einrichtung.</div>
  <button class="primary mic" id="mic" type="button">🎙️ Sprechen</button>
  <div class="reply" id="reply" aria-live="polite">Hallo! Ich bin Nova. Sag zum Beispiel: „Öffne YouTube“ oder „Wie spät ist es?“</div><div id="actionSlot" class="actions hidden"></div>
  <div class="actions"><button class="secondary" id="repeat" type="button">🔊 Wiederholen</button><button class="secondary" id="snap" type="button">📸 Ansicht speichern</button><button class="secondary" id="share" type="button">↗ Teilen</button></div>
@@ -41,7 +41,7 @@ button,input{font:inherit}button{border:0;border-radius:14px;padding:13px 16px;f
  <div class="setting"><label for="confirm">Vor App-Link nachfragen <input id="confirm" type="checkbox" checked></label></div>
 </div><p class="muted">Mikrofon und Spracherkennung hängen von Safari/iPadOS ab. Dauerhaftes Mithören im Hintergrund ist mit einer normalen Website nicht möglich.</p></section>
 <section class="panel"><h2>Letzte Befehle</h2><div id="history" class="history"><div class="muted">Deine letzten Befehle erscheinen hier.</div></div><div class="actions"><button class="secondary" id="clearHistory" type="button">Verlauf löschen</button><button class="secondary" id="install" type="button" hidden>＋ Zum Home-Bildschirm</button></div></section>
-<footer>Nova Assistant · Kostenlose Web-Version · Läuft im Browser</footer>
+<footer>Nova Assistant · Web-Version · Gemini-Einrichtung erforderlich</footer>
 </main>
 <script type="module" src="./firebase-ai.js"></script>
 <script>
