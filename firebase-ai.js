@@ -19,7 +19,7 @@ window.novaGeminiReady = (async () => {
   });
   const ai = getAI(app, { backend: new GoogleAIBackend() });
   window.novaGeminiModel = getGenerativeModel(ai, {
-    model: "gemini-2.5-flash",
+    model: "gemini-3.8-flash",
     systemInstruction: "Du bist Nova, ein hilfreicher deutschsprachiger Assistent. Antworte freundlich, klar und altersgerecht. Gib keine gefährlichen Anleitungen. Wenn du etwas nicht weißt, sage es ehrlich."
   });
   window.novaGeminiStatus = "ready";
