@@ -80,23 +80,18 @@ function renderHistory(){const items=safeReadHistory();$("history").replaceChild
 function readVoiceRules(){try{const a=JSON.parse(localStorage.getItem("nova-voice-rules")||"[]");return Array.isArray(a)?a.filter(x=>x&&typeof x.trigger==="string"&&typeof x.target==="string").slice(0,30):[]}catch(e){return []}}
 function renderVoiceRules(){const host=$("voiceRules");if(!host)return;host.replaceChildren();const rules=readVoiceRules();if(!rules.length){const p=document.createElement("div");p.className="muted";p.textContent="Noch keine eigenen Befehle gespeichert.";host.append(p);return}rules.forEach(rule=>{const row=document.createElement("div");row.className="history-item";const label=document.createElement("span");label.textContent="„"+rule.trigger+"“ → "+rule.target;const del=document.createElement("button");del.className="secondary";del.type="button";del.textContent="Löschen";del.onclick=()=>{const next=readVoiceRules().filter(x=>x.trigger!==rule.trigger);localStorage.setItem("nova-voice-rules",JSON.stringify(next));renderVoiceRules();reply("Der Sprachbefehl wurde gelöscht.")};row.append(label,del);host.append(row)})}
 function learnVoiceRule(text){
- const match=text.trim().match(/\\bwenn\\s+ich\\s+(.+?)\\s+(?:sage|sag|schreibe|schreib|tippe|tipp|eingebe|eingib)\\s*(?:,|\\bdann\\b)?\\s*(.+)$/i);
+ const match=text.trim().match(/\bwenn\s+ich\s+(.+?)\s+(?:sage|sag|schreibe|schreib|tippe|tipp|eingebe|eingib)\s*(?:,|\bdann\b)?\s*(.+)$/i);
  if(!match)return false;
  const trigger=match[1].replace(/^["'„]|["'“]$/g,"").replace(/[.!?]+$/g,"").trim().toLowerCase();
- const instruction=match[2].trim();
+ const instruction=match[2].toLowerCase();
  const known=[
   {names:["goodnotes","good notes","good"],url:"goodnotes://",label:"GoodNotes"},
   {names:["youtube","you tube"],url:"https://www.youtube.com/",label:"YouTube"},
   {names:["google","google suche"],url:"https://www.google.com/",label:"Google"},
   {names:["wikipedia","wiki"],url:"https://de.wikipedia.org/",label:"Wikipedia"}
  ];
- let target=null;
- for(const item of known){
-  const escaped=item.names.map(n=>n.replace(/[.*+?^${}()|[\\]\\\\]/g,"\\\\$&"));
-  const appPattern=new RegExp("(?:öffne|oeffne|starte|start|öffnen|oeffnen|wechsle(?:\\\\s+zu)?|wechsel(?:\\\\s+zu)?|gehe(?:\\\\s+zu)?|geh(?:\\\\s+zu)?|springe(?:\\\\s+zu)?|mach(?:e)?\\\\s+auf)\\\\s+(?:"+escaped.join("|")+")(?=\\\\b|$)","i");
-  const passivePattern=new RegExp("(?:"+escaped.join("|")+")(?=.{0,45}(?:öffnen|oeffnen|starten|aufrufen))","i");
-  if(appPattern.test(instruction)||passivePattern.test(instruction)){target=item;break}
- }
+ const actionWords=["öffne","oeffne","starte","start","wechsel","wechsle","geh","gehe","spring","mach","aufruf","öffnen","oeffnen"];
+ const target=known.find(item=>item.names.some(name=>instruction.includes(name))&&actionWords.some(word=>instruction.includes(word)));
  if(!trigger||!target)return false;
  const rules=readVoiceRules().filter(x=>x.trigger!==trigger);
  rules.unshift({trigger,target:target.url});
