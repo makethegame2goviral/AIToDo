@@ -30,12 +30,12 @@ window.novaGeminiReady = (async () => {
   return false;
 });
 
-window.novaGeminiAsk = async function(messages) {
+window.novaGeminiAsk = async function(messages, userName = "") {
   const ready = await window.novaGeminiReady;
   if (!ready || !window.novaGeminiModel) {
     throw new Error("Gemini ist noch nicht eingerichtet. Firebase-Konfiguration und App Check fehlen noch.");
   }
-  const transcript = messages.slice(-10).map(m =>
+  const transcript = "Der Nutzer heißt " + String(userName || "Freund") + ". Sprich ihn gelegentlich mit seinem Namen an, aber nicht in jedem Satz.\n\n" + messages.slice(-10).map(m =>
     (m.role === "assistant" ? "Nova" : "Nutzer") + ": " + String(m.content || "")
   ).join("\n\n");
   const result = await window.novaGeminiModel.generateContent(transcript);
