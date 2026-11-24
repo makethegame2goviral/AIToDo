@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<title>AI Assistant – iPad</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--line:#263650;--muted:#9aabc4;--blue:#6b8cff;--cyan:#65d7e8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#243d70 0,transparent 42%),var(--bg);color:#f5f7ff;font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:760px;margin:auto;padding:28px 18px calc(36px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.brand{font-weight:800;letter-spacing:.2px}.tag{font-size:12px;color:#b8c8e4;border:1px solid var(--line);padding:7px 10px;border-radius:99px}
+.hero,.panel{background:linear-gradient(160deg,rgba(24,39,63,.96),rgba(15,25,42,.96));border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 18px 55px #0004}
+.hero{text-align:center}.orb{width:116px;height:116px;border-radius:50%;margin:20px auto;background:radial-gradient(circle at 35% 30%,#a8c4ff,#5278e9 45%,#263d83 75%);display:grid;place-items:center;box-shadow:0 0 45px #5278e955}.orb span{font-size:42px}.status{color:var(--muted);font-size:14px;margin:8px 0 18px}
+button,input{font:inherit}button{border:0;border-radius:14px;padding:13px 16px;font-weight:700;cursor:pointer}.primary{background:linear-gradient(100deg,var(--blue),#5dbae9);color:#081225}.secondary{background:#243550;color:#f3f6ff;border:1px solid #385071}.mic{width:100%;font-size:16px}.mic[aria-pressed=true]{background:#e05e77;color:white}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
+h1{font-size:26px;margin:8px 0}h2{font-size:18px;margin:0 0 14px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.panel{margin-top:16px}.command{display:flex;gap:9px;margin-top:12px}.command input{min-width:0;flex:1;background:#0b1424;border:1px solid var(--line);border-radius:13px;padding:13px;color:white}
+.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chip{font-size:13px;padding:8px 11px;background:#1c2c45;border:1px solid #304563;border-radius:99px;color:#dce7ff;cursor:pointer}
+#reply{min-height:25px;color:#d8e5ff;line-height:1.5;margin-top:12px;white-space:pre-wrap}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:12px}.setting{background:#0d1728;border:1px solid var(--line);border-radius:14px;padding:13px}.setting label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px}.setting input{accent-color:#7794ff;width:18px;height:18px}
+footer{text-align:center;margin-top:18px;color:#8092ad;font-size:12px}
+@media(max-width:430px){.settings{grid-template-columns:1fr}.hero,.panel{padding:18px}}
+</style>
+</head>
+<body><main>
+<header><div class="brand">✦ AI Assistant</div><div class="tag">iPad · Deutsch</div></header>
+<section class="hero">
+  <div class="muted">DEIN PERSÖNLICHER ASSISTENT</div>
+  <h1>Was kann ich für dich tun?</h1>
+  <div class="orb" aria-hidden="true"><span>✦</span></div>
+  <div class="status" id="status">Bereit. Tippe auf das Mikrofon und sprich.</div>
+  <button class="primary mic" id="mic" type="button">🎙️ Sprechen</button>
+  <div id="reply" aria-live="polite">Ich höre dir zu, wenn du das Mikrofon aktivierst.</div>
+</section>
+<section class="panel">
+  <h2>Befehl eingeben</h2>
+  <div class="command"><input id="command" placeholder="Zum Beispiel: Öffne GoodNotes" autocomplete="off"><button class="primary" id="send">Senden</button></div>
+  <div class="examples">
+    <button class="chip" data-command="Öffne GoodNotes">GoodNotes öffnen</button>
+    <button class="chip" data-command="Öffne Safari">Safari öffnen</button>
+    <button class="chip" data-command="Mach einen Screenshot">Screenshot</button>
+  </div>
+  <p class="muted">Hinweis: Für Aktionen auf dem iPad müssen passende Apple-Kurzbefehle eingerichtet sein. Eine Website darf iPadOS nicht vollständig fernsteuern.</p>
+</section>
+<section class="panel">
+  <h2>Einstellungen</h2>
+  <div class="settings">
+    <div class="setting"><label for="voice">Antworten vorlesen <input id="voice" type="checkbox" checked></label></div>
+    <div class="setting"><label for="confirm">Vor Aktionen bestätigen <input id="confirm" type="checkbox" checked></label></div>
+  </div>
+  <p class="muted">Die Sprachausgabe verwendet eine verfügbare deutsche Stimme deines iPads.</p>
+</section>
+<footer>AI Assistant · Erste Web-Version · Sprachfunktionen benötigen Mikrofonfreigabe</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const say=text=>{if(!$('voice').checked||!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';speechSynthesis.speak(u)};
+function respond(text){$('reply').textContent=text;say(text)}
+function runCommand(raw){
+ const c=raw.trim().toLowerCase();if(!c)return;
+ $('command').value=raw;
+ const app=c.includes('goodnotes')?'GoodNotes':c.includes('safari')?'Safari':c.includes('youtube')?'YouTube':null;
+ if(app){
+  const message='Ich kann '+app+' nicht direkt selbst fernsteuern. Richte dafür bitte einen Apple-Kurzbefehl ein und verknüpfe ihn später mit diesem Assistenten.';
+  respond(message);return;
+ }
+ if(c.includes('screenshot')){
+  respond('Für einen Screenshot nutze bitte einen Apple-Kurzbefehl oder die iPad-Tastenkombination. Eine normale Website kann keinen Screenshot des gesamten iPads aufnehmen.');return;
+ }
+ respond('Diesen Befehl kenne ich noch nicht. Später können wir dafür einen passenden Apple-Kurzbefehl hinzufügen.');
+}
+$('send').addEventListener('click',()=>runCommand($('command').value));
+$('command').addEventListener('keydown',e=>{if(e.key==='Enter')runCommand($('command').value)});
+document.querySelectorAll('[data-command]').forEach(b=>b.addEventListener('click',()=>runCommand(b.dataset.command)));
+let recognition=null,listening=false;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){recognition=new SR();recognition.lang='de-DE';recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onresult=e=>{const t=e.results[0][0].transcript;$('status').textContent='Erkannt: '+t;runCommand(t)};recognition.onerror=()=>{$('status').textContent='Spracherkennung nicht verfügbar. Du kannst den Befehl eintippen.'};recognition.onend=()=>{listening=false;$('mic').setAttribute('aria-pressed','false');$('mic').textContent='🎙️ Sprechen'};}
+$('mic').addEventListener('click',()=>{if(!recognition){respond('Dein Browser unterstützt hier keine Spracherkennung. Bitte tippe deinen Befehl ein oder nutze die Diktierfunktion der iPad-Tastatur.');return}if(listening){recognition.stop();return}try{recognition.start();listening=true;$('mic').setAttribute('aria-pressed','true');$('mic').textContent='■ Zuhören beenden';$('status').textContent='Ich höre zu …'}catch(e){$('status').textContent='Bitte erlaube den Mikrofonzugriff in Safari.'}});
+</script></body></html>
