@@ -57,18 +57,34 @@ footer{text-align:center;margin-top:18px;color:#8092ad;font-size:12px}
 const $=id=>document.getElementById(id);
 const say=text=>{if(!$('voice').checked||!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';speechSynthesis.speak(u)};
 function respond(text){$('reply').textContent=text;say(text)}
+const shortcuts={goodnotes:"GoodNotes öffnen",safari:"Safari öffnen",youtube:"YouTube öffnen",screenshot:"Screenshot erstellen"};
+let pendingShortcut=null;
+function showShortcut(name,description){
+ pendingShortcut=name;
+ $('reply').textContent=description+'\\n\\nTippe auf „Kurzbefehl starten“, um ihn auf deinem iPad auszuführen.';
+ let launch=$('launchShortcut');
+ if(!launch){launch=document.createElement('button');launch.id='launchShortcut';launch.className='primary';launch.type='button';launch.style.marginTop='12px';$('reply').after(launch);}
+ launch.textContent='▶ Kurzbefehl starten';
+ launch.onclick=()=>{if(!pendingShortcut)return;const url='shortcuts://run-shortcut?name='+encodeURIComponent(pendingShortcut);window.location.href=url;};
+ say(description);
+}
 function runCommand(raw){
  const c=raw.trim().toLowerCase();if(!c)return;
  $('command').value=raw;
- const app=c.includes('goodnotes')?'GoodNotes':c.includes('safari')?'Safari':c.includes('youtube')?'YouTube':null;
- if(app){
-  const message='Ich kann '+app+' nicht direkt selbst fernsteuern. Richte dafür bitte einen Apple-Kurzbefehl ein und verknüpfe ihn später mit diesem Assistenten.';
-  respond(message);return;
+ let key=null;
+ if(c.includes('goodnotes'))key='goodnotes';
+ else if(c.includes('safari'))key='safari';
+ else if(c.includes('youtube'))key='youtube';
+ else if(c.includes('screenshot'))key='screenshot';
+ if(key){
+  const name=shortcuts[key];
+  if($('confirm').checked){showShortcut(name,'Ich habe den Befehl erkannt: '+name+'.');}
+  else{showShortcut(name,'Bereit: '+name+'. Tippe zum Starten auf die Schaltfläche.');}
+  return;
  }
- if(c.includes('screenshot')){
-  respond('Für einen Screenshot nutze bitte einen Apple-Kurzbefehl oder die iPad-Tastenkombination. Eine normale Website kann keinen Screenshot des gesamten iPads aufnehmen.');return;
- }
- respond('Diesen Befehl kenne ich noch nicht. Später können wir dafür einen passenden Apple-Kurzbefehl hinzufügen.');
+ pendingShortcut=null;
+ const launch=$('launchShortcut');if(launch)launch.remove();
+ respond('Diesen Befehl kenne ich noch nicht. Du kannst GoodNotes, Safari, YouTube oder Screenshot sagen.');
 }
 $('send').addEventListener('click',()=>runCommand($('command').value));
 $('command').addEventListener('keydown',e=>{if(e.key==='Enter')runCommand($('command').value)});
