@@ -3,94 +3,72 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101827">
-<title>AI Assistant – iPad</title>
+<meta name="theme-color" content="#090f1e">
+<meta name="description" content="Dein deutschsprachiger KI-Assistent für das iPad.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>Nova – Dein iPad-Assistent</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--line:#263650;--muted:#9aabc4;--blue:#6b8cff;--cyan:#65d7e8}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#243d70 0,transparent 42%),var(--bg);color:#f5f7ff;font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-main{max-width:760px;margin:auto;padding:28px 18px calc(36px + env(safe-area-inset-bottom))}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.brand{font-weight:800;letter-spacing:.2px}.tag{font-size:12px;color:#b8c8e4;border:1px solid var(--line);padding:7px 10px;border-radius:99px}
-.hero,.panel{background:linear-gradient(160deg,rgba(24,39,63,.96),rgba(15,25,42,.96));border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 18px 55px #0004}
-.hero{text-align:center}.orb{width:116px;height:116px;border-radius:50%;margin:20px auto;background:radial-gradient(circle at 35% 30%,#a8c4ff,#5278e9 45%,#263d83 75%);display:grid;place-items:center;box-shadow:0 0 45px #5278e955}.orb span{font-size:42px}.status{color:var(--muted);font-size:14px;margin:8px 0 18px}
-button,input{font:inherit}button{border:0;border-radius:14px;padding:13px 16px;font-weight:700;cursor:pointer}.primary{background:linear-gradient(100deg,var(--blue),#5dbae9);color:#081225}.secondary{background:#243550;color:#f3f6ff;border:1px solid #385071}.mic{width:100%;font-size:16px}.mic[aria-pressed=true]{background:#e05e77;color:white}
-.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
-h1{font-size:26px;margin:8px 0}h2{font-size:18px;margin:0 0 14px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
-.panel{margin-top:16px}.command{display:flex;gap:9px;margin-top:12px}.command input{min-width:0;flex:1;background:#0b1424;border:1px solid var(--line);border-radius:13px;padding:13px;color:white}
-.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chip{font-size:13px;padding:8px 11px;background:#1c2c45;border:1px solid #304563;border-radius:99px;color:#dce7ff;cursor:pointer}
-#reply{min-height:25px;color:#d8e5ff;line-height:1.5;margin-top:12px;white-space:pre-wrap}
-.settings{display:grid;grid-template-columns:1fr 1fr;gap:12px}.setting{background:#0d1728;border:1px solid var(--line);border-radius:14px;padding:13px}.setting label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px}.setting input{accent-color:#7794ff;width:18px;height:18px}
-footer{text-align:center;margin-top:18px;color:#8092ad;font-size:12px}
-@media(max-width:430px){.settings{grid-template-columns:1fr}.hero,.panel{padding:18px}}
+:root{color-scheme:dark;--bg:#080e1b;--panel:#111c30;--panel2:#0c1628;--line:#263958;--muted:#9aabc5;--blue:#8298ff;--cyan:#62e2ee;--white:#f5f7ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#263e78 0,transparent 48%),var(--bg);color:var(--white);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:820px;margin:auto;padding:20px 16px calc(38px + env(safe-area-inset-bottom))}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.brand{font-weight:850;letter-spacing:.3px;font-size:19px}.brand span{color:var(--cyan)}.pill{font-size:12px;color:#c7d5f1;border:1px solid var(--line);padding:7px 10px;border-radius:99px}
+.hero,.panel{border:1px solid var(--line);border-radius:25px;background:linear-gradient(155deg,#172641f5,#0e192cf5);box-shadow:0 18px 55px #0005}.hero{text-align:center;padding:25px 20px 22px}.eyebrow{font-size:11px;letter-spacing:2px;color:#9eb5e9;font-weight:800}.orb{width:112px;height:112px;border-radius:50%;margin:20px auto 15px;display:grid;place-items:center;background:radial-gradient(circle at 33% 28%,#d8e4ff,#7897ff 43%,#314a9a 78%);box-shadow:0 0 0 9px #8ba7ff12,0 0 55px #6c8dff70;animation:float 4s ease-in-out infinite}.orb span{font-size:43px;color:white;text-shadow:0 2px 14px #fff8}@keyframes float{50%{transform:translateY(-5px)}}h1{font-size:27px;margin:7px 0}.status{font-size:14px;color:var(--muted);min-height:22px;margin:8px 0 17px}
+button,input{font:inherit}button{border:0;border-radius:14px;padding:13px 16px;font-weight:750;cursor:pointer;transition:transform .15s,filter .15s}button:active{transform:scale(.98)}button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.primary{background:linear-gradient(105deg,var(--blue),#62cce8);color:#081225}.secondary{background:#223653;color:#f4f7ff;border:1px solid #385274}.mic{width:100%;font-size:16px}.mic[aria-pressed=true]{background:#d75a76;color:white}.panel{margin-top:15px;padding:20px}.panel h2{font-size:17px;margin:0 0 13px}.command{display:flex;gap:9px}.command input{min-width:0;flex:1;background:#091426;border:1px solid var(--line);border-radius:14px;padding:13px;color:white}.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chip{font-size:12px;padding:8px 11px;background:#1b2d49;border:1px solid #304968;border-radius:99px;color:#dce8ff}.reply{margin-top:14px;padding:13px 14px;background:#0b172a;border:1px solid #253a59;border-radius:15px;min-height:48px;text-align:left;line-height:1.5;white-space:pre-wrap;color:#e3edff}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1;min-width:130px}.muted{color:var(--muted);font-size:12px;line-height:1.55}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.setting{background:#0b172a;border:1px solid var(--line);border-radius:14px;padding:12px}.setting label{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.setting input{width:19px;height:19px;accent-color:#8298ff}.history{display:grid;gap:8px}.history-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#0b172a;border:1px solid #203450;border-radius:12px;padding:10px 12px;font-size:13px}.history-item small{color:var(--muted)}footer{text-align:center;color:#8293ad;font-size:11px;padding:20px 8px}.hidden{display:none!important}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.hero{padding:22px 16px}.panel{padding:16px}h1{font-size:24px}}
 </style>
 </head>
 <body><main>
-<header><div class="brand">✦ AI Assistant</div><div class="tag">iPad · Deutsch</div></header>
+<header><div class="brand">✦ <span>NOVA</span> ASSISTANT</div><div class="pill">iPad · Deutsch</div></header>
 <section class="hero">
-  <div class="muted">DEIN PERSÖNLICHER ASSISTENT</div>
-  <h1>Was kann ich für dich tun?</h1>
-  <div class="orb" aria-hidden="true"><span>✦</span></div>
-  <div class="status" id="status">Bereit. Tippe auf das Mikrofon und sprich.</div>
-  <button class="primary mic" id="mic" type="button">🎙️ Sprechen</button>
-  <div id="reply" aria-live="polite">Ich höre dir zu, wenn du das Mikrofon aktivierst.</div>
+ <div class="eyebrow">DEIN PERSÖNLICHER ASSISTENT</div><div class="orb" aria-hidden="true"><span>✦</span></div>
+ <h1>Was kann ich für dich tun?</h1><div class="status" id="status">Bereit. Tippe auf das Mikrofon oder schreibe einen Befehl.</div>
+ <button class="primary mic" id="mic" type="button">🎙️ Sprechen</button>
+ <div class="reply" id="reply" aria-live="polite">Hallo! Ich bin Nova. Sag zum Beispiel: „Öffne YouTube“ oder „Wie spät ist es?“</div>
+ <div class="actions"><button class="secondary" id="repeat" type="button">🔊 Wiederholen</button><button class="secondary" id="snap" type="button">📸 Ansicht speichern</button></div>
 </section>
 <section class="panel">
-  <h2>Befehl eingeben</h2>
-  <div class="command"><input id="command" placeholder="Zum Beispiel: Öffne GoodNotes" autocomplete="off"><button class="primary" id="send">Senden</button></div>
-  <div class="examples">
-    <button class="chip" data-command="Öffne GoodNotes">GoodNotes öffnen</button>
-    <button class="chip" data-command="Öffne Safari">Safari öffnen</button>
-    <button class="chip" data-command="Mach einen Screenshot">Screenshot</button>
-  </div>
-  <p class="muted">Hinweis: Für Aktionen auf dem iPad müssen passende Apple-Kurzbefehle eingerichtet sein. Eine Website darf iPadOS nicht vollständig fernsteuern.</p>
+ <h2>Was soll ich machen?</h2><div class="command"><input id="command" placeholder="Schreib einen Befehl …" autocomplete="off"><button class="primary" id="send" type="button">Senden</button></div>
+ <div class="examples">
+  <button class="chip" data-command="Öffne GoodNotes">GoodNotes öffnen</button><button class="chip" data-command="Öffne YouTube">YouTube öffnen</button><button class="chip" data-command="Öffne Google">Google öffnen</button><button class="chip" data-command="Wie spät ist es?">Uhrzeit</button><button class="chip" data-command="Hilfe">Hilfe</button>
+ </div>
+ <p class="muted">Nova erkennt Befehle direkt im Browser. App-Links funktionieren nur, wenn die jeweilige App installiert ist und iPadOS den Link zulässt.</p>
 </section>
-<section class="panel">
-  <h2>Einstellungen</h2>
-  <div class="settings">
-    <div class="setting"><label for="voice">Antworten vorlesen <input id="voice" type="checkbox" checked></label></div>
-    <div class="setting"><label for="confirm">Vor Aktionen bestätigen <input id="confirm" type="checkbox" checked></label></div>
-  </div>
-  <p class="muted">Die Sprachausgabe verwendet eine verfügbare deutsche Stimme deines iPads.</p>
-</section>
-<footer>AI Assistant · Erste Web-Version · Sprachfunktionen benötigen Mikrofonfreigabe</footer>
+<section class="panel"><h2>Einstellungen</h2><div class="grid">
+ <div class="setting"><label for="voice">Antworten vorlesen <input id="voice" type="checkbox" checked></label></div>
+ <div class="setting"><label for="continuous">Nach Antwort weiter zuhören <input id="continuous" type="checkbox"></label></div>
+ <div class="setting"><label for="historyToggle">Befehlsverlauf speichern <input id="historyToggle" type="checkbox" checked></label></div>
+ <div class="setting"><label for="confirm">Vor App-Link nachfragen <input id="confirm" type="checkbox" checked></label></div>
+</div><p class="muted">Mikrofon und Spracherkennung hängen von Safari/iPadOS ab. Dauerhaftes Mithören im Hintergrund ist mit einer normalen Website nicht möglich.</p></section>
+<section class="panel"><h2>Letzte Befehle</h2><div id="history" class="history"><div class="muted">Deine letzten Befehle erscheinen hier.</div></div><div class="actions"><button class="secondary" id="clearHistory" type="button">Verlauf löschen</button><button class="secondary" id="install" type="button" hidden>＋ Zum Home-Bildschirm</button></div></section>
+<footer>Nova Assistant · Kostenlose Web-Version · Läuft im Browser</footer>
 </main>
 <script>
-const $=id=>document.getElementById(id);
-const say=text=>{if(!$('voice').checked||!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';speechSynthesis.speak(u)};
-function respond(text){$('reply').textContent=text;say(text)}
-const shortcuts={goodnotes:"GoodNotes öffnen",safari:"Safari öffnen",youtube:"YouTube öffnen",screenshot:"Screenshot erstellen"};
-let pendingShortcut=null;
-function showShortcut(name,description){
- pendingShortcut=name;
- $('reply').textContent=description+'\\n\\nTippe auf „Kurzbefehl starten“, um ihn auf deinem iPad auszuführen.';
- let launch=$('launchShortcut');
- if(!launch){launch=document.createElement('button');launch.id='launchShortcut';launch.className='primary';launch.type='button';launch.style.marginTop='12px';$('reply').after(launch);}
- launch.textContent='▶ Kurzbefehl starten';
- launch.onclick=()=>{if(!pendingShortcut)return;const url='shortcuts://run-shortcut?name='+encodeURIComponent(pendingShortcut);window.location.href=url;};
- say(description);
-}
-function runCommand(raw){
- const c=raw.trim().toLowerCase();if(!c)return;
- $('command').value=raw;
- let key=null;
- if(c.includes('goodnotes'))key='goodnotes';
- else if(c.includes('safari'))key='safari';
- else if(c.includes('youtube'))key='youtube';
- else if(c.includes('screenshot'))key='screenshot';
- if(key){
-  const name=shortcuts[key];
-  if($('confirm').checked){showShortcut(name,'Ich habe den Befehl erkannt: '+name+'.');}
-  else{showShortcut(name,'Bereit: '+name+'. Tippe zum Starten auf die Schaltfläche.');}
-  return;
- }
- pendingShortcut=null;
- const launch=$('launchShortcut');if(launch)launch.remove();
- respond('Diesen Befehl kenne ich noch nicht. Du kannst GoodNotes, Safari, YouTube oder Screenshot sagen.');
-}
-$('send').addEventListener('click',()=>runCommand($('command').value));
-$('command').addEventListener('keydown',e=>{if(e.key==='Enter')runCommand($('command').value)});
-document.querySelectorAll('[data-command]').forEach(b=>b.addEventListener('click',()=>runCommand(b.dataset.command)));
-let recognition=null,listening=false;
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(SR){recognition=new SR();recognition.lang='de-DE';recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onresult=e=>{const t=e.results[0][0].transcript;$('status').textContent='Erkannt: '+t;runCommand(t)};recognition.onerror=()=>{$('status').textContent='Spracherkennung nicht verfügbar. Du kannst den Befehl eintippen.'};recognition.onend=()=>{listening=false;$('mic').setAttribute('aria-pressed','false');$('mic').textContent='🎙️ Sprechen'};}
-$('mic').addEventListener('click',()=>{if(!recognition){respond('Dein Browser unterstützt hier keine Spracherkennung. Bitte tippe deinen Befehl ein oder nutze die Diktierfunktion der iPad-Tastatur.');return}if(listening){recognition.stop();return}try{recognition.start();listening=true;$('mic').setAttribute('aria-pressed','true');$('mic').textContent='■ Zuhören beenden';$('status').textContent='Ich höre zu …'}catch(e){$('status').textContent='Bitte erlaube den Mikrofonzugriff in Safari.'}});
+const $=id=>document.getElementById(id);let lastReply="Hallo! Ich bin Nova. Wie kann ich helfen?";let pendingUrl=null;let recognition=null;let listening=false;let installPrompt=null;
+const say=t=>{if(!$("voice").checked||!("speechSynthesis"in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";const voices=speechSynthesis.getVoices();const de=voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith("de"));if(de)u.voice=de;speechSynthesis.speak(u)};
+function reply(t){lastReply=t;$("reply").textContent=t;say(t)}
+function historyAdd(t){if(!$("historyToggle").checked)return;let items=[];try{items=JSON.parse(localStorage.getItem("nova-history")||"[]")}catch(e){}items.unshift({text:t,time:new Date().toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"})});items=items.slice(0,6);try{localStorage.setItem("nova-history",JSON.stringify(items))}catch(e){}renderHistory()}
+function renderHistory(){let items=[];try{items=JSON.parse(localStorage.getItem("nova-history")||"[]")}catch(e){}$("history").innerHTML="";if(!items.length){$("history").innerHTML='<div class="muted">Deine letzten Befehle erscheinen hier.</div>';return}items.forEach(x=>{const d=document.createElement("div");d.className="history-item";const s=document.createElement("span");s.textContent=x.text;const tm=document.createElement("small");tm.textContent=x.time;d.append(s,tm);$("history").append(d)})}
+function openTarget(url,label){pendingUrl=url;if($("confirm").checked){reply(label+" – soll ich den Link jetzt öffnen?");$("reply").textContent=label+" – tippe auf „Jetzt öffnen“, wenn du fortfahren möchtest.";let b=$("openLink");if(!b){b=document.createElement("button");b.id="openLink";b.className="primary";b.style.marginTop="10px";$("reply").after(b)}b.textContent="↗ Jetzt öffnen";b.onclick=()=>{if(pendingUrl){location.href=pendingUrl;pendingUrl=null;b.remove()}}}else{location.href=url}}
+function run(raw){const original=raw.trim();if(!original)return;$("command").value=original;historyAdd(original);const c=original.toLowerCase().replace(/[!?.,]/g," ").replace(/\s+/g," ");
+const has=(...words)=>words.some(w=>c.includes(w));
+if(has("hilfe","was kannst du","befehle")){pendingUrl=null;reply("Du kannst sagen: Öffne GoodNotes, öffne YouTube, öffne Google, öffne Wikipedia, wie spät ist es, oder mach einen Screenshot dieser Assistenten-Ansicht.");return}
+if(has("uhrzeit","wie spät","wieviel uhr")){reply("Es ist "+new Date().toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"})+".");return}
+if(has("datum","welcher tag","heute für ein tag")){reply("Heute ist "+new Date().toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+".");return}
+if(has("screenshot","bildschirmfoto","ansicht speichern")){captureView();return}
+if(has("goodnotes")){openTarget("goodnotes://","Ich versuche, GoodNotes zu öffnen.");return}
+if(has("youtube")){openTarget("https://www.youtube.com/","Ich öffne YouTube.");return}
+if(has("google")){openTarget("https://www.google.com/","Ich öffne Google.");return}
+if(has("wikipedia")){openTarget("https://de.wikipedia.org/","Ich öffne Wikipedia.");return}
+if(has("safari","browser")){reply("Du benutzt bereits Safari oder einen anderen Browser. Eine Website kann Safari nicht als eigene App fernstarten.");return}
+if(has("stop","abbrechen")){pendingUrl=null;if("speechSynthesis"in window)speechSynthesis.cancel();const b=$("openLink");if(b)b.remove();reply("Okay, abgebrochen.");return}
+reply("Diesen Befehl kann ich noch nicht ausführen. Tippe auf „Hilfe“, um die unterstützten Befehle zu sehen.");}
+function captureView(){const canvas=document.createElement("canvas");canvas.width=1100;canvas.height=1350;const x=canvas.getContext("2d");const grad=x.createLinearGradient(0,0,1100,1350);grad.addColorStop(0,"#172b50");grad.addColorStop(1,"#080e1b");x.fillStyle=grad;x.fillRect(0,0,1100,1350);x.fillStyle="#62e2ee";x.font="bold 34px Arial";x.fillText("✦ NOVA ASSISTANT",70,95);x.fillStyle="#f5f7ff";x.font="bold 54px Arial";x.fillText("Dein iPad-Assistent",70,205);x.fillStyle="#8298ff";x.beginPath();x.arc(550,410,105,0,Math.PI*2);x.fill();x.fillStyle="#fff";x.font="bold 90px Arial";x.fillText("✦",515,440);x.fillStyle="#dce8ff";x.font="bold 30px Arial";x.fillText("Letzte Antwort",70,600);x.fillStyle="#f5f7ff";x.font="28px Arial";wrapText(x,lastReply,70,665,940,43);x.fillStyle="#9aabc5";x.font="22px Arial";x.fillText("Erstellt am "+new Date().toLocaleString("de-DE"),70,1250);const a=document.createElement("a");a.download="nova-assistant-ansicht.png";a.href=canvas.toDataURL("image/png");a.click();reply("Die Nova-Ansicht wurde als PNG-Bild erstellt. Das ist kein Screenshot des gesamten iPad-Bildschirms.");}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){const words=text.split(" ");let line="";for(const word of words){const test=line+word+" ";if(ctx.measureText(test).width>maxWidth&&line){ctx.fillText(line,x,y);line=word+" ";y+=lineHeight;if(y>1120)break}else line=test}if(line&&y<=1120)ctx.fillText(line,x,y)}
+$("send").onclick=()=>$("command").value&&run($("command").value);$("command").addEventListener("keydown",e=>{if(e.key==="Enter")run($("command").value)});document.querySelectorAll("[data-command]").forEach(b=>b.onclick=()=>run(b.dataset.command));$("repeat").onclick=()=>say(lastReply);$("snap").onclick=captureView;$("clearHistory").onclick=()=>{localStorage.removeItem("nova-history");renderHistory();reply("Der Befehlsverlauf wurde auf diesem Gerät gelöscht.")};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(SR){recognition=new SR();recognition.lang="de-DE";recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onresult=e=>{const t=e.results[0][0].transcript;$("status").textContent="Erkannt: "+t;run(t)};recognition.onerror=e=>{$("status").textContent=e.error==="not-allowed"?"Mikrofonzugriff verweigert. Erlaube ihn in den Safari-Einstellungen.":"Spracherkennung gerade nicht verfügbar. Du kannst tippen."};recognition.onend=()=>{listening=false;$("mic").setAttribute("aria-pressed","false");$("mic").textContent="🎙️ Sprechen";if($("continuous").checked&&document.visibilityState==="visible")setTimeout(startListening,500)}}
+function startListening(){if(!recognition)return;try{recognition.start();listening=true;$("mic").setAttribute("aria-pressed","true");$("mic").textContent="■ Zuhören beenden";$("status").textContent="Ich höre zu …"}catch(e){$("status").textContent="Mikrofon bitte kurz warten lassen."}}
+$("mic").onclick=()=>{if(!recognition){reply("Dieser Browser unterstützt keine Web-Spracherkennung. Nutze die Diktierfunktion deiner Tastatur oder tippe den Befehl.");return}if(listening){$("continuous").checked=false;recognition.stop()}else startListening()};
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;$("install").hidden=false});$("install").onclick=async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("install").hidden=true}else reply("Auf dem iPad: Safari öffnen, Teilen antippen und „Zum Home-Bildschirm“ auswählen.")};
+renderHistory();if("serviceWorker"in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 </script></body></html>
