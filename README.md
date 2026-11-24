@@ -1,21 +1,36 @@
-# AI Assistant – iPad
+# Nova – iPad Assistant
 
-Erste deutschsprachige Web-Oberfläche für einen Sprachassistenten auf dem iPad.
+Kostenlose deutschsprachige Assistenten-Webseite für iPad, iPhone und Desktop.
 
-## Aktueller Stand
-- Dunkle, responsive Oberfläche
-- Deutsche Spracheingabe über die Web Speech API, sofern der Browser sie unterstützt
-- Deutsche Sprachausgabe über SpeechSynthesis
-- Einstellungs-Schalter für Sprachausgabe und Bestätigung
-- Erste Beispielbefehle und klare Hinweise zu iPadOS-Grenzen
+## Funktionen
+- Deutsche Spracheingabe über die Web Speech API, wenn der Browser sie unterstützt.
+- Deutsche Sprachausgabe über SpeechSynthesis.
+- Befehle für GoodNotes (App-Link), YouTube, Google und Wikipedia.
+- Datum und Uhrzeit direkt im Browser.
+- Export einer gestalteten PNG-Ansicht der letzten Antwort.
+- Lokaler Befehlsverlauf mit Löschfunktion.
+- PWA-Manifest und Service Worker für Home-Bildschirm und Offline-Grundfunktionen.
 
-## Wichtig: iPad-Steuerung
-Eine Website kann iPadOS und andere Apps nicht uneingeschränkt fernsteuern. Für echte Aktionen müssen wir später Apple-Kurzbefehle und unterstützte App-Links einrichten. Mikrofonzugriff und Spracherkennung hängen von Safari/iPadOS und den erteilten Berechtigungen ab. Dauerhaftes Mithören im Hintergrund wird von einer normalen Website nicht bereitgestellt.
+## Veröffentlichen mit GitHub Pages
+1. Repository auf GitHub öffnen.
+2. **Settings → Pages** öffnen.
+3. Unter **Build and deployment** bei **Source** „Deploy from a branch“ auswählen.
+4. Branch `main` und Ordner `/(root)` auswählen, dann **Save**.
+5. Warten, bis GitHub Pages die Website veröffentlicht hat.
 
-## Start
-GitHub Pages für dieses Repository aktivieren (Settings → Pages → Deploy from a branch → main → /root). Danach die veröffentlichte Pages-Adresse in Safari öffnen und den Mikrofonzugriff erlauben.
+Danach ist die Seite normalerweise unter https://makethegame2goviral.github.io/AIToDo/ erreichbar.
 
-## Nächste Schritte
-1. Apple-Kurzbefehle für erlaubte Aktionen einrichten.
-2. Die Befehle sicher mit der Oberfläche verbinden.
-3. Optional Supabase für Nutzerprofile und synchronisierte Einstellungen ergänzen. Keine geheimen Schlüssel in den Frontend-Code legen.
+## Auf dem iPad installieren
+1. Veröffentlichte Adresse in Safari öffnen.
+2. Teilen antippen.
+3. „Zum Home-Bildschirm“ wählen.
+
+Es ist keine kostenpflichtige App nötig.
+
+## Grenzen von iPadOS
+Eine Website kann nicht beliebige Apps fernsteuern, Safari aus sich selbst heraus starten oder einen Screenshot des gesamten iPad-Bildschirms aufnehmen. Der GoodNotes-App-Link wird nur funktionieren, wenn GoodNotes installiert ist und iPadOS den Link akzeptiert. Der PNG-Export erstellt nur eine gestaltete Ansicht der Nova-Webseite, keinen System-Screenshot.
+
+Spracherkennung, Mikrofonfreigabe, PWA-Installation und Offline-Verhalten hängen vom Browser und iPadOS ab. Dauerhaftes Mithören im Hintergrund wird von einer normalen Website nicht unterstützt.
+
+## Datenschutz
+Befehle und Verlauf werden lokal im Browser gespeichert. Es gibt in dieser Version keinen externen KI-Server und keine Anmeldung. Der Verlauf lässt sich in den Einstellungen löschen.
