@@ -1,45 +1,28 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app-check.js";
-import { getAI, getGenerativeModel, GoogleAIBackend } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-ai.js";
-import { firebaseConfig, recaptchaEnterpriseSiteKey } from "./firebase-config.js";
+const SUPABASE_URL = "https://xbefkwirfijxglgoogrn.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_3hsQ2uEpBBYOQ2rh44J2BQ_6mt9md6T";
+const NOVA_ENDPOINT = SUPABASE_URL + "/functions/v1/nova-ai";
 
-const required = ["apiKey", "authDomain", "projectId", "appId"];
-const configured = required.every(k => firebaseConfig[k] && !firebaseConfig[k].startsWith("HIER_")) &&
-  recaptchaEnterpriseSiteKey && !recaptchaEnterpriseSiteKey.startsWith("HIER_");
-
-window.novaGeminiReady = (async () => {
-  if (!configured) {
-    window.novaGeminiStatus = "setup-needed";
-    return false;
-  }
-  const app = initializeApp(firebaseConfig);
-  initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider(recaptchaEnterpriseSiteKey),
-    isTokenAutoRefreshEnabled: true
-  });
-  const ai = getAI(app, { backend: new GoogleAIBackend() });
-  window.novaGeminiModel = getGenerativeModel(ai, {
-    model: "gemini-3.8-flash",
-    systemInstruction: "Du bist Nova, ein hilfreicher deutschsprachiger Assistent. Antworte freundlich, klar und altersgerecht. Gib keine gefährlichen Anleitungen. Wenn du etwas nicht weißt, sage es ehrlich."
-  });
-  window.novaGeminiStatus = "ready";
-  return true;
-})().catch(error => {
-  console.error("Nova Firebase AI initialisation failed:", error);
-  window.novaGeminiStatus = "error";
-  return false;
-});
+window.novaGeminiStatus = "ready";
+window.novaGeminiReady = Promise.resolve(true);
 
 window.novaGeminiAsk = async function(messages, userName = "") {
-  const ready = await window.novaGeminiReady;
-  if (!ready || !window.novaGeminiModel) {
-    throw new Error("Gemini ist noch nicht eingerichtet. Firebase-Konfiguration und App Check fehlen noch.");
+  const response = await fetch(NOVA_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_PUBLISHABLE_KEY,
+      "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY
+    },
+    body: JSON.stringify({
+      messages: messages.slice(-10),
+      userName: String(userName || "").slice(0, 30)
+    })
+  });
+  let data = {};
+  try { data = await response.json(); } catch (_) {}
+  if (!response.ok) throw new Error(data.error || "Nova konnte gerade nicht antworten.");
+  if (typeof data.answer !== "string" || !data.answer.trim()) {
+    throw new Error("Nova hat keine gültige Antwort erhalten.");
   }
-  const transcript = "Der Nutzer heißt " + String(userName || "Freund") + ". Sprich ihn gelegentlich mit seinem Namen an, aber nicht in jedem Satz.\n\n" + messages.slice(-10).map(m =>
-    (m.role === "assistant" ? "Nova" : "Nutzer") + ": " + String(m.content || "")
-  ).join("\n\n");
-  const result = await window.novaGeminiModel.generateContent(transcript);
-  const answer = result.response.text();
-  if (!answer) throw new Error("Gemini hat keine Textantwort zurückgegeben.");
-  return answer;
+  return data.answer.trim();
 };
